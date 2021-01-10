@@ -2,14 +2,79 @@ package me.ihellsmc.spawnpk.active.manager;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.ihellsmc.spawnpk.SpawnPK;
+import me.ihellsmc.spawnpk.active.data.ActiveData;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Getter @Setter
 public class ActiveManager {
 
-    public Set<UUID> activePlayers = new HashSet<>();
+    private final SpawnPK core = SpawnPK.getInstance();
+    public HashMap<UUID, ActiveData> active = new HashMap<>();
+
+    public void selectInitialJump(Player player, Location startLocation) {
+        if (active.containsKey(player.getUniqueId())) selectNewJump(active.get(player.getUniqueId()));
+
+        ActiveData data = new ActiveData();
+        data.setBlockFrom(player.getLocation().getBlock().getRelative(0, -1, 0));
+
+        List<int[]> potential = core.getJumpManager().getRandom();
+
+        if (potential.size() == 1) {
+            data.setBlockTo(data.getBlockFrom().getRelative(potential.get(0)[0], potential.get(0)[1], potential.get(0)[2]));
+            data.setOtherBlocks(new ArrayList<>());
+        } else {
+            int[] last = potential.get(potential.size() - 1);
+            data.setBlockTo(data.getBlockFrom().getRelative(last[0], last[1], last[2]));
+
+            List<Block> otherToSet = new ArrayList<>();
+            for (int i = 0; i < potential.size() - 2; i++) {
+                otherToSet.add(data.getBlockFrom().getRelative(potential.get(i)[0], potential.get(i)[1], potential.get(i)[2]));
+            }
+
+            data.setOtherBlocks(otherToSet);
+        }
+
+        active.put(player.getUniqueId(), data);
+
+        data.getBlockTo().setType(Material.BOOKSHELF);
+        data.getOtherBlocks().forEach(b -> b.setType(Material.BOOKSHELF));
+
+    }
+
+    public void selectNewJump(ActiveData data) {
+        List<int[]> selected = core.getJumpManager().getRandom();
+
+        data.getBlockFrom().setType(Material.AIR);
+        data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
+        data.getOtherBlocks().clear();
+        data.setBlockFrom(data.getBlockTo());
+
+        if (selected.size() == 1) {
+            data.setBlockTo(data.getBlockFrom().getRelative(selected.get(0)[0], selected.get(0)[1], selected.get(0)[2]));
+            data.setOtherBlocks(new ArrayList<>());
+        } else {
+            int[] last = selected.get(selected.size() - 1);
+            data.setBlockTo(data.getBlockFrom().getRelative(last[0], last[1], last[2]));
+
+            List<Block> otherToSet = new ArrayList<>();
+            for (int i = 0; i < selected.size() - 2; i++) {
+                otherToSet.add(data.getBlockFrom().getRelative(selected.get(i)[0], selected.get(i)[1], selected.get(i)[2]));
+            }
+
+            data.setOtherBlocks(otherToSet);
+        }
+
+        data.getBlockTo().setType(Material.BOOKSHELF);
+        data.getOtherBlocks().forEach(b -> b.setType(Material.BOOKSHELF));
+    }
 
 }

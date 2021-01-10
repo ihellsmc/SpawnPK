@@ -16,7 +16,7 @@ public class JumpManager {
     private final SpawnPK core = SpawnPK.getInstance();
     private final YamlConfiguration jumpsFile = core.getConfigManager().getFile("config").getConfig();
 
-    public List<Set<int[]>> jumps = new ArrayList<>();
+    public List<List<int[]>> jumps = new ArrayList<>();
 
     public Location plateLocation;
 
@@ -39,8 +39,8 @@ public class JumpManager {
 
     }
 
-    private Set<int[]> genRelative(String jump) {
-        Set<int[]> toReturn = new HashSet<>();
+    private List<int[]> genRelative(String jump) {
+        List<int[]> toReturn = new ArrayList<>();
 
         for (String theFuckingJump : jump.split("/")) {
             int[] jumpArray = new int[3];
@@ -59,6 +59,10 @@ public class JumpManager {
         }
 
         return toReturn;
+    }
+
+    public List<int[]> getRandom() {
+        return jumps.get(new Random().nextInt(jumps.size()));
     }
 
 }

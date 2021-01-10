@@ -2,11 +2,12 @@ package me.ihellsmc.spawnpk;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.ihellsmc.spawnpk.active.manager.ActiveManager;
 import me.ihellsmc.spawnpk.commands.TestCommand;
 import me.ihellsmc.spawnpk.framework.command.QuarkFramework;
 import me.ihellsmc.spawnpk.framework.config.manager.ConfigManager;
-import me.ihellsmc.spawnpk.listeners.StartListener;
-import me.ihellsmc.spawnpk.managers.JumpManager;
+import me.ihellsmc.spawnpk.jumps.listener.StartListener;
+import me.ihellsmc.spawnpk.jumps.manager.JumpManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +19,7 @@ public class SpawnPK extends JavaPlugin {
     private QuarkFramework framework;
 
     private ConfigManager configManager;
+    private ActiveManager activeManager;
     private JumpManager jumpManager;
 
     @Override
@@ -38,6 +40,7 @@ public class SpawnPK extends JavaPlugin {
 
     protected void registerManagers() {
         configManager = new ConfigManager();
+        activeManager = new ActiveManager();
         jumpManager = new JumpManager();
     }
 

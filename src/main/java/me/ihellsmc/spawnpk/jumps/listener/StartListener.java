@@ -1,4 +1,4 @@
-package me.ihellsmc.spawnpk.listeners;
+package me.ihellsmc.spawnpk.jumps.listener;
 
 import me.ihellsmc.spawnpk.SpawnPK;
 import me.ihellsmc.spawnpk.utils.CC;
@@ -19,13 +19,19 @@ public class StartListener implements Listener {
             if (e.getClickedBlock().getLocation().equals(core.getJumpManager().getPlateLocation())) {
                 e.getPlayer().sendMessage(CC.trns("&eTeleporting..."));
 
-                e.getPlayer().teleport(e.getPlayer().getLocation().add(20 * core.getJumpManager().getActivePlayers().size(), 30, 0));
+                e.getPlayer().teleport(e.getPlayer().getLocation().add(distanced(15), 30, distanced(15)));
                 e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).setType(Material.BOOKSHELF);
 
-                core.getJumpManager().getActivePlayers().add(e.getPlayer().getUniqueId());
+                core.getActiveManager().getActivePlayers().add(e.getPlayer().getUniqueId());
 
             }
         }
+    }
+
+    private int distanced(int blocks) {
+        if (core.getActiveManager().getActivePlayers().isEmpty()) return 0;
+        int n = blocks * core.getActiveManager().getActivePlayers().size();
+        return core.getActiveManager().getActivePlayers().size() % 2 == 0 ? n : -n;
     }
 
 }

@@ -16,4 +16,4 @@ jumps:
 
 start-location:
   world: "world"
-  coords: "225,64,208"
+  coords: "255,84,208"

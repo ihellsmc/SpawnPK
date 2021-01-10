@@ -1,4 +1,4 @@
-package me.ihellsmc.spawnpk.managers;
+package me.ihellsmc.spawnpk.jumps.manager;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,6 @@ public class JumpManager {
     private final YamlConfiguration jumpsFile = core.getConfigManager().getFile("config").getConfig();
 
     public List<Set<int[]>> jumps = new ArrayList<>();
-    public Set<UUID> activePlayers = new HashSet<>();
 
     public Location plateLocation;
 
@@ -30,6 +29,7 @@ public class JumpManager {
         if (jumpsFile.getString("start-location.coords") != null) {
             String[] split = jumpsFile.getString("start-location.coords").split(",");
             World world = Bukkit.getWorld(jumpsFile.getString("start-location.world"));
+
             try {
                 plateLocation = world.getBlockAt(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2])).getLocation();
             } catch (NumberFormatException e) {

@@ -13,3 +13,7 @@ jumps:
   - "-4,1,-1"
   - "4,0,-1"
   - "-4,0,0"
+
+start-location:
+  world: "world"
+  coords: "225,64,208"

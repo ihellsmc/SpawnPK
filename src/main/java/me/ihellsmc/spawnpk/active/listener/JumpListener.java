@@ -28,6 +28,7 @@ public class JumpListener implements Listener {
                 e.getPlayer().sendMessage(CC.trns("&c&lYOU FAILED! &7You are dogshit!"));
 
                 data.getBlockFrom().setType(Material.AIR);
+                data.getBlockTo().setType(Material.AIR);
                 data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
                 data.clear();
 

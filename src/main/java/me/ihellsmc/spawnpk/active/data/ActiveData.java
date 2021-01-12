@@ -12,4 +12,8 @@ public class ActiveData {
     private Block blockTo;
     private List<Block> otherBlocks;
 
+    public void clear() {
+        this.blockFrom = null; this.blockTo = null; this.otherBlocks = null;
+    }
+
 }

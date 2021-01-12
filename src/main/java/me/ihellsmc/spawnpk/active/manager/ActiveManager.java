@@ -66,7 +66,7 @@ public class ActiveManager {
             data.setBlockTo(data.getBlockFrom().getRelative(last[0], last[1], last[2]));
 
             List<Block> otherToSet = new ArrayList<>();
-            for (int i = 0; i < selected.size() - 2; i++) {
+            for (int i = 0; i < selected.size() - 1; i++) {
                 otherToSet.add(data.getBlockFrom().getRelative(selected.get(i)[0], selected.get(i)[1], selected.get(i)[2]));
             }
 

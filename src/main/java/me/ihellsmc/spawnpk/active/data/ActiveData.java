@@ -11,9 +11,10 @@ public class ActiveData {
     private Block blockFrom;
     private Block blockTo;
     private List<Block> otherBlocks;
+    private int points = 0;
 
     public void clear() {
-        this.blockFrom = null; this.blockTo = null; this.otherBlocks = null;
+        this.blockFrom = null; this.blockTo = null; this.otherBlocks = null; this.points = 0;
     }
 
 }

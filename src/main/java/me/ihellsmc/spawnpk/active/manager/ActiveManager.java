@@ -53,6 +53,8 @@ public class ActiveManager {
     public void selectNewJump(ActiveData data) {
         List<int[]> selected = core.getJumpManager().getRandom();
 
+        data.setPoints(data.getPoints() + 1);
+
         data.getBlockFrom().setType(Material.AIR);
         data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
         data.getOtherBlocks().clear();

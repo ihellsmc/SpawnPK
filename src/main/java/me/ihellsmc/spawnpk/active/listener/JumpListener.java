@@ -26,6 +26,7 @@ public class JumpListener implements Listener {
 
             } else if (e.getPlayer().getLocation().getBlockY() + 2 < data.getBlockTo().getY()) {
                 e.getPlayer().sendMessage(CC.trns("&c&lYOU FAILED! &7You are dogshit!"));
+                e.getPlayer().sendMessage(CC.trns("&eOn the bright side, you scored " + data.getPoints() + " jumps!"));
 
                 data.getBlockFrom().setType(Material.AIR);
                 data.getBlockTo().setType(Material.AIR);

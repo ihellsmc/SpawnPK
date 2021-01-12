@@ -1,6 +1,7 @@
 package me.ihellsmc.spawnpk.commands;
 
 import me.ihellsmc.spawnpk.SpawnPK;
+import me.ihellsmc.spawnpk.active.data.ActiveData;
 import me.ihellsmc.spawnpk.framework.command.Command;
 import me.ihellsmc.spawnpk.framework.command.CommandArgs;
 import me.ihellsmc.spawnpk.framework.command.QuarkFramework;
@@ -56,11 +57,13 @@ public class TestCommand {
         }
     }
 
-    @Command(name = "random")
+    @Command(name = "test")
     public void onRandomCommand(CommandArgs cmd) {
-        for (int[] arr : core.getJumpManager().getJumps().get(new Random().nextInt(core.getJumpManager().getJumps().size()))) {
-            cmd.getPlayer().sendMessage(CC.trns("&e" + arr[0] + " " + arr[1] + " " + arr[2]));
-        }
+        ActiveData data = core.getActiveManager().getActive().get(cmd.getPlayer().getUniqueId());
+        String from = data.getBlockFrom().getX() + " " + data.getBlockFrom().getY() + " " + data.getBlockFrom().getZ();
+        String to = data.getBlockTo().getX() + " " + data.getBlockTo().getY() + " " + data.getBlockTo().getZ();
+        cmd.getPlayer().sendMessage(CC.trns("&c&lFROM: &e" + from));
+        cmd.getPlayer().sendMessage(CC.trns("&c&lTO: &e" + to));
     }
 
 }

@@ -24,7 +24,7 @@ public class StartListener implements Listener {
                 e.getPlayer().teleport(e.getPlayer().getLocation().add(distanced(15), 30, distanced(15)));
                 e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).setType(Material.BOOKSHELF);
 
-                core.getActiveManager().selectInitialJump(e.getPlayer(), e.getPlayer().getLocation());
+                core.getActiveManager().selectInitialJump(e.getPlayer());
             }
         }
     }

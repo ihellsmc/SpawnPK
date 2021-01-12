@@ -20,7 +20,7 @@ public class ActiveManager {
     private final SpawnPK core = SpawnPK.getInstance();
     public HashMap<UUID, ActiveData> active = new HashMap<>();
 
-    public void selectInitialJump(Player player, Location startLocation) {
+    public void selectInitialJump(Player player) {
         if (active.containsKey(player.getUniqueId())) selectNewJump(active.get(player.getUniqueId()));
 
         ActiveData data = new ActiveData();

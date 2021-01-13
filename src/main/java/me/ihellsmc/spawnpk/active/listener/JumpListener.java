@@ -25,7 +25,7 @@ public class JumpListener implements Listener {
             if (e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).getLocation().equals(data.getBlockTo().getLocation())) {
 
                 core.getActiveManager().selectNewJump(data);
-                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 2, 1);
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 1, 2);
                 e.getPlayer().playEffect(data.getBlockTo().getLocation(), Effect.FLAME, 1);
 
             } else if (e.getPlayer().getLocation().getBlockY() + 2 < data.getBlockTo().getY()) {

@@ -5,7 +5,9 @@ import lombok.Setter;
 import me.ihellsmc.spawnpk.SpawnPK;
 import me.ihellsmc.spawnpk.active.data.ActiveData;
 import me.ihellsmc.spawnpk.utils.CC;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -23,10 +25,11 @@ public class JumpListener implements Listener {
             if (e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).getLocation().equals(data.getBlockTo().getLocation())) {
 
                 core.getActiveManager().selectNewJump(data);
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 2, 1);
+                e.getPlayer().playEffect(data.getBlockTo().getLocation(), Effect.FLAME, 1);
 
             } else if (e.getPlayer().getLocation().getBlockY() + 2 < data.getBlockTo().getY()) {
-                e.getPlayer().sendMessage(CC.trns("&c&lYOU FAILED! &7You are dogshit!"));
-                e.getPlayer().sendMessage(CC.trns("&eOn the bright side, you scored " + data.getPoints() + " jumps!"));
+                e.getPlayer().sendMessage(CC.trns("&c&lYOU FAILED! &7You scored a total of &e" + data.getPoints() + "&7 jumps!"));
 
                 data.getBlockFrom().setType(Material.AIR);
                 data.getBlockTo().setType(Material.AIR);

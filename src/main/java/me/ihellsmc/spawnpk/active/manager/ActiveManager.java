@@ -21,10 +21,14 @@ public class ActiveManager {
     public HashMap<UUID, ActiveData> active = new HashMap<>();
 
     public void selectInitialJump(Player player) {
+        Material material = core.getJumpManager().getRandomMaterial();
+        player.getLocation().getBlock().getRelative(0, -1, 0).setType(material);
+
         if (active.containsKey(player.getUniqueId())) selectNewJump(active.get(player.getUniqueId()));
 
         ActiveData data = new ActiveData();
         data.setBlockFrom(player.getLocation().getBlock().getRelative(0, -1, 0));
+        data.setBlock(material);
 
         List<int[]> potential = core.getJumpManager().getRandom();
 
@@ -45,8 +49,8 @@ public class ActiveManager {
 
         active.put(player.getUniqueId(), data);
 
-        data.getBlockTo().setType(Material.BOOKSHELF);
-        data.getOtherBlocks().forEach(b -> b.setType(Material.BOOKSHELF));
+        data.getBlockTo().setType(data.getBlock());
+        data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
 
     }
 
@@ -75,8 +79,8 @@ public class ActiveManager {
             data.setOtherBlocks(otherToSet);
         }
 
-        data.getBlockTo().setType(Material.BOOKSHELF);
-        data.getOtherBlocks().forEach(b -> b.setType(Material.BOOKSHELF));
+        data.getBlockTo().setType(data.getBlock());
+        data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
     }
 
 }

@@ -15,6 +15,19 @@ jumps:
   - "-4,0,0"
 #### MAKE SURE THAT THE TARGET BLOCK (THE BLOCK THEY LAND ON) IS THE LAST ONE IN THE STRING
 
+blocks:
+  - "BOOKSHELF"
+  - "MELON_BLOCK"
+  - "BEACON"
+  - "COAL_BLOCK"
+  - "COBBLESTONE"
+  - "EMERALD_BLOCK"
+  - "GOLD_BLOCK"
+  - "GLASS"
+  - "LAPIS_BLOCK"
+  - "QUARTZ_BLOCK"
+  - "WORKBENCH"
+
 start-location:
   world: "world"
   coords: "255,84,208"

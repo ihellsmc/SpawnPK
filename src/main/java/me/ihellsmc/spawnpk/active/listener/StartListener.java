@@ -2,7 +2,6 @@ package me.ihellsmc.spawnpk.active.listener;
 
 import me.ihellsmc.spawnpk.SpawnPK;
 import me.ihellsmc.spawnpk.utils.CC;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -18,12 +17,8 @@ public class StartListener implements Listener {
             if (core.getJumpManager().getPlateLocation() == null) return;
 
             if (e.getClickedBlock().getLocation().equals(core.getJumpManager().getPlateLocation())) {
-
-                e.getPlayer().sendMessage(CC.trns("&eTeleporting..."));
-
+                e.getPlayer().sendMessage(CC.trns("&aTeleporting..."));
                 e.getPlayer().teleport(e.getPlayer().getLocation().add(distanced(15), 30, distanced(15)));
-                e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).setType(Material.BOOKSHELF);
-
                 core.getActiveManager().selectInitialJump(e.getPlayer());
             }
         }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.ihellsmc.spawnpk.SpawnPK;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -16,7 +17,8 @@ public class JumpManager {
     private final SpawnPK core = SpawnPK.getInstance();
     private final YamlConfiguration jumpsFile = core.getConfigManager().getFile("config").getConfig();
 
-    public List<List<int[]>> jumps = new ArrayList<>();
+    private List<List<int[]>> jumps = new ArrayList<>();
+    private List<Material> types = new ArrayList<>();
 
     public Location plateLocation;
 
@@ -24,6 +26,12 @@ public class JumpManager {
 
         for (String jump : jumpsFile.getStringList("jumps")) {
             jumps.add(genRelative(jump));
+        }
+
+        for (String mat : jumpsFile.getStringList("blocks")) {
+            try {
+                types.add(Material.getMaterial(mat.toUpperCase()));
+            } catch (Exception ignored) {}
         }
 
         if (jumpsFile.getString("start-location.coords") != null) {
@@ -63,6 +71,10 @@ public class JumpManager {
 
     public List<int[]> getRandom() {
         return jumps.get(new Random().nextInt(jumps.size()));
+    }
+
+    public Material getRandomMaterial() {
+        return types.get(new Random().nextInt(types.size()));
     }
 
 }

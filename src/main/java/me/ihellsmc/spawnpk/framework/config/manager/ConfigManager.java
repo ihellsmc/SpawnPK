@@ -15,6 +15,7 @@ public class ConfigManager {
 
     public ConfigManager() {
         configs.add(new ConfigurationFile("config"));
+        configs.add(new ConfigurationFile("player-data"));
     }
 
     public ConfigurationFile getFile(String name) {

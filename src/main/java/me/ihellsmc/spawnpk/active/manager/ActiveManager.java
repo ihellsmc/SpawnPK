@@ -4,13 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import me.ihellsmc.spawnpk.SpawnPK;
 import me.ihellsmc.spawnpk.active.data.ActiveData;
-import org.bukkit.Location;
+import me.ihellsmc.spawnpk.playerdata.PlayerData;
+import me.ihellsmc.spawnpk.utils.CC;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,13 +20,19 @@ import java.util.UUID;
 public class ActiveManager {
 
     private final SpawnPK core = SpawnPK.getInstance();
-    public HashMap<UUID, ActiveData> active = new HashMap<>();
 
-    public void selectInitialJump(Player player) {
+    public List<UUID> current = new ArrayList<>();
+
+    public void selectInitialJump(Player player, boolean speed) {
+        PlayerData pd = core.getPlayerManager().get(player.getUniqueId());
+
+        player.sendMessage(CC.trns("&aTeleporting..."));
+        player.teleport(player.getLocation().add(distanced(15), 30, distanced(15)));
+
         Material material = core.getJumpManager().getRandomMaterial();
         player.getLocation().getBlock().getRelative(0, -1, 0).setType(material);
 
-        if (active.containsKey(player.getUniqueId())) selectNewJump(active.get(player.getUniqueId()));
+        if (pd.getData() != null) selectNewJump(pd.getData());
 
         ActiveData data = new ActiveData();
         data.setBlockFrom(player.getLocation().getBlock().getRelative(0, -1, 0));
@@ -47,10 +55,14 @@ public class ActiveManager {
             data.setOtherBlocks(otherToSet);
         }
 
-        active.put(player.getUniqueId(), data);
-
         data.getBlockTo().setType(data.getBlock());
         data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
+
+        data.setSpeed(speed);
+        if (speed) player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10000, 2), true);
+
+        pd.setData(data);
+        current.add(player.getUniqueId());
 
     }
 
@@ -81,6 +93,12 @@ public class ActiveManager {
 
         data.getBlockTo().setType(data.getBlock());
         data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
+    }
+
+    private int distanced(int blocks) {
+        if (current.isEmpty()) return 0;
+        int n = blocks * current.size();
+        return current.size() % 2 == 0 ? n : -n;
     }
 
 }

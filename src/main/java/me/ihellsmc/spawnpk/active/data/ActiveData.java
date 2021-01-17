@@ -14,9 +14,10 @@ public class ActiveData {
     private List<Block> otherBlocks;
     private int points = 0;
     private Material block;
+    private boolean speed = false;
 
     public void clear() {
-        this.blockFrom = null; this.blockTo = null; this.otherBlocks = null; this.points = 0; this.block = null;
+        blockFrom = null; blockTo = null; otherBlocks = null; points = 0; block = null; speed = false;
     }
 
 }

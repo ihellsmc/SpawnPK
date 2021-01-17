@@ -69,12 +69,8 @@ public class JumpManager {
         return toReturn;
     }
 
-    public List<int[]> getRandom() {
-        return jumps.get(new Random().nextInt(jumps.size()));
-    }
+    public List<int[]> getRandom() { return jumps.get(new Random().nextInt(jumps.size())); }
 
-    public Material getRandomMaterial() {
-        return types.get(new Random().nextInt(types.size()));
-    }
+    public Material getRandomMaterial() { return types.get(new Random().nextInt(types.size())); }
 
 }

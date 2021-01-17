@@ -57,13 +57,4 @@ public class TestCommand {
         }
     }
 
-    @Command(name = "test")
-    public void onRandomCommand(CommandArgs cmd) {
-        ActiveData data = core.getActiveManager().getActive().get(cmd.getPlayer().getUniqueId());
-        String from = data.getBlockFrom().getX() + " " + data.getBlockFrom().getY() + " " + data.getBlockFrom().getZ();
-        String to = data.getBlockTo().getX() + " " + data.getBlockTo().getY() + " " + data.getBlockTo().getZ();
-        cmd.getPlayer().sendMessage(CC.trns("&c&lFROM: &e" + from));
-        cmd.getPlayer().sendMessage(CC.trns("&c&lTO: &e" + to));
-    }
-
 }

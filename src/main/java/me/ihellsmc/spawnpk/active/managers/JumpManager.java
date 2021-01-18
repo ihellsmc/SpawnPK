@@ -1,4 +1,4 @@
-package me.ihellsmc.spawnpk.jumps.manager;
+package me.ihellsmc.spawnpk.active.managers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +19,8 @@ public class JumpManager {
 
     private List<List<int[]>> jumps = new ArrayList<>();
     private List<Material> types = new ArrayList<>();
+
+    public HashMap<Material, Integer> blockTypes = new HashMap<>();
 
     public Location plateLocation;
 

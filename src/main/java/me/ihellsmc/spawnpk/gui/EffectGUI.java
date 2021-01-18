@@ -31,7 +31,7 @@ public class EffectGUI {
         yesMeta.setLore(Collections.singletonList(CC.trns("&7This will enable longer jumps!")));
         yes.setItemMeta(yesMeta);
 
-        ItemStack no = new ItemStack(Material.INK_SACK, 1, (byte) 2);
+        ItemStack no = new ItemStack(Material.INK_SACK, 1, (byte) 1);
         ItemMeta noMeta = no.getItemMeta();
         noMeta.setDisplayName(CC.trns("&cClick to disable speed effect!"));
         noMeta.setLore(Collections.singletonList(CC.trns("&7This will keep default jumps!")));

@@ -12,6 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
 
 @Getter @Setter
 public class JumpListener implements Listener {
@@ -37,7 +38,7 @@ public class JumpListener implements Listener {
                 data.getBlockTo().setType(Material.AIR);
                 data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
 
-                if (data.isSpeed()) e.getPlayer().getActivePotionEffects().clear();
+                for (PotionEffect effect : e.getPlayer().getActivePotionEffects()) e.getPlayer().removePotionEffect(effect.getType());
 
                 pd.clearActiveData();
                 core.getActiveManager().getCurrent().remove(e.getPlayer().getUniqueId());

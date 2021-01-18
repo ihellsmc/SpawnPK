@@ -16,17 +16,17 @@ jumps:
 #### MAKE SURE THAT THE TARGET BLOCK (THE BLOCK THEY LAND ON) IS THE LAST ONE IN THE STRING
 
 blocks:
-  - "BOOKSHELF"
-  - "MELON_BLOCK"
-  - "BEACON"
-  - "COAL_BLOCK"
-  - "COBBLESTONE"
-  - "EMERALD_BLOCK"
-  - "GOLD_BLOCK"
-  - "GLASS"
-  - "LAPIS_BLOCK"
-  - "QUARTZ_BLOCK"
-  - "WORKBENCH"
+  - "WOOL:0"
+  - "BOOKSHELF:10"
+  - "COAL_BLOCK:25"
+  - "BEACON:50"
+  - "EMERALD_BLOCK:100"
+  - "QUARTZ_BLOCK:200"
+  - "SPONGE:300"
+  - "HAY_BLOCK:400"
+  - "MELON:500"
+  - "TNT:1000"
+  - "RAINBOW:1500"
 
 start-location:
   world: "world"

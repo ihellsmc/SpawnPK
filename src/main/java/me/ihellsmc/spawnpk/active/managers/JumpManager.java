@@ -3,6 +3,9 @@ package me.ihellsmc.spawnpk.active.managers;
 import lombok.Getter;
 import lombok.Setter;
 import me.ihellsmc.spawnpk.SpawnPK;
+import me.ihellsmc.spawnpk.parkourblock.ParkourBlock;
+import me.ihellsmc.spawnpk.parkourblock.ParkourBlockType;
+import me.ihellsmc.spawnpk.playerdata.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,8 +20,7 @@ public class JumpManager {
     private final SpawnPK core = SpawnPK.getInstance();
     private final YamlConfiguration jumpsFile = core.getConfigManager().getFile("config").getConfig();
 
-    private List<List<int[]>> jumps = new ArrayList<>();
-    private List<Material> types = new ArrayList<>();
+    private List<List<ParkourBlock>> jumps = new ArrayList<>();
 
     public HashMap<Material, Integer> blockTypes = new HashMap<>();
 
@@ -32,7 +34,9 @@ public class JumpManager {
 
         for (String mat : jumpsFile.getStringList("blocks")) {
             try {
-                types.add(Material.getMaterial(mat.toUpperCase()));
+                Material material = Material.getMaterial(mat.split(":")[0].toUpperCase());
+                int req = Integer.parseInt(mat.split(":")[1]);
+                if (!blockTypes.containsKey(material)) blockTypes.put(material, req);
             } catch (Exception ignored) {}
         }
 
@@ -49,12 +53,15 @@ public class JumpManager {
 
     }
 
-    private List<int[]> genRelative(String jump) {
-        List<int[]> toReturn = new ArrayList<>();
+    private List<ParkourBlock> genRelative(String jump) {
+        List<ParkourBlock> toReturn = new ArrayList<>();
 
-        for (String theFuckingJump : jump.split("/")) {
+        for (String j : jump.split("/")) {
+
+            ParkourBlockType type = ParkourBlockType.valueOf(j.split(":")[0].toUpperCase());
+
             int[] jumpArray = new int[3];
-            String[] relative = theFuckingJump.split(",");
+            String[] relative = j.split(":")[1].split(",");
 
             for (int i = 0; i < relative.length; i++) {
                 try {
@@ -65,14 +72,23 @@ public class JumpManager {
                 }
             }
 
-            toReturn.add(jumpArray);
+            ParkourBlock block = new ParkourBlock();
+            block.setRelative(jumpArray); block.setType(type);
+
+            toReturn.add(block);
         }
 
         return toReturn;
     }
 
-    public List<int[]> getRandom() { return jumps.get(new Random().nextInt(jumps.size())); }
+    public List<ParkourBlock> getRandom() { return jumps.get(new Random().nextInt(jumps.size())); }
 
-    public Material getRandomMaterial() { return types.get(new Random().nextInt(types.size())); }
+    public Material getMaterial(PlayerData pd) {
+        Material toReturn = (Material) blockTypes.keySet().toArray()[0];
+        for (Material material : blockTypes.keySet()) {
+            if (pd.getHighscore() >= blockTypes.get(material)) toReturn = material;
+        }
+        return toReturn;
+    }
 
 }

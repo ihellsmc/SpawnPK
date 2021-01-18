@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.ihellsmc.spawnpk.SpawnPK;
 import me.ihellsmc.spawnpk.active.data.ActiveData;
+import me.ihellsmc.spawnpk.parkourblock.ParkourBlock;
 import me.ihellsmc.spawnpk.playerdata.PlayerData;
 import me.ihellsmc.spawnpk.utils.CC;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class ActiveManager {
 
         player.teleport(player.getLocation().add(distanced(15), 30, distanced(15)));
 
-        Material material = core.getJumpManager().getRandomMaterial(); // TODO: block selection
+        Material material = core.getJumpManager().getMaterial(pd); // TODO: block selection
 
         if (pd.getData() != null) selectNewJump(pd.getData());
 
@@ -68,26 +69,45 @@ public class ActiveManager {
 
     private void setBlocks(ActiveData data) {
 
-        List<int[]> blocks = core.getJumpManager().getRandom();
+        List<ParkourBlock> blocks = core.getJumpManager().getRandom();
 
         if (blocks.size() == 1) {
-            data.setBlockTo(data.getBlockFrom().getRelative(blocks.get(0)[0], blocks.get(0)[1], blocks.get(0)[2]));
+            data.setBlockTo(data.getBlockFrom().getRelative(blocks.get(0).getRelative()[0], blocks.get(0).getRelative()[1], blocks.get(0).getRelative()[2]));
+            set(data, data.getBlockFrom().getRelative(blocks.get(0).getRelative()[0], blocks.get(0).getRelative()[1], blocks.get(0).getRelative()[2]), blocks.get(0));
             data.setOtherBlocks(new ArrayList<>());
         } else {
-            int[] last = blocks.get(blocks.size() - 1);
-            data.setBlockTo(data.getBlockFrom().getRelative(last[0], last[1], last[2]));
+
+            ParkourBlock last = blocks.get(blocks.size() - 1);
+            data.setBlockTo(data.getBlockFrom().getRelative(last.getRelative()[0], last.getRelative()[1], last.getRelative()[2]));
+            set(data, data.getBlockFrom().getRelative(last.getRelative()[0], last.getRelative()[1], last.getRelative()[2]), last);
 
             List<Block> otherToSet = new ArrayList<>();
             for (int i = 0; i < blocks.size() - 2; i++) {
-                otherToSet.add(data.getBlockFrom().getRelative(blocks.get(i)[0], blocks.get(i)[1], blocks.get(i)[2]));
+                otherToSet.add(data.getBlockFrom().getRelative(blocks.get(i).getRelative()[0], blocks.get(i).getRelative()[1], blocks.get(i).getRelative()[2]));
+                set(data, data.getBlockFrom().getRelative(blocks.get(i).getRelative()[0], blocks.get(i).getRelative()[1], blocks.get(i).getRelative()[2]), blocks.get(i));
             }
 
             data.setOtherBlocks(otherToSet);
         }
 
-        data.getBlockTo().setType(data.getBlock());
-        data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
+        if (data.getBlockTo().getType() == Material.AIR) data.getBlockTo().setType(data.getBlock());
+        for (Block block : data.getOtherBlocks()) {
+            if (block.getType() == Material.AIR) block.setType(data.getBlock());
+        }
 
+        for (ParkourBlock block : blocks) { block.clear(); } blocks.clear();
+
+    }
+
+    private void set(ActiveData data, Block block, ParkourBlock pkBlock) {
+        switch (pkBlock.getType()) {
+            case ICE:
+                block.setType(Material.ICE); return;
+            case FENCE:
+                block.setType(Material.FENCE); return;
+            case BLOCK:
+                block.setType(data.getBlock());
+        }
     }
 
 }

@@ -37,6 +37,8 @@ public class JumpListener implements Listener {
                 data.getBlockTo().setType(Material.AIR);
                 data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
 
+                if (data.isSpeed()) e.getPlayer().getActivePotionEffects().clear();
+
                 pd.clearActiveData();
                 core.getActiveManager().getCurrent().remove(e.getPlayer().getUniqueId());
             }

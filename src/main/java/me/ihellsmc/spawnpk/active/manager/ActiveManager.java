@@ -59,7 +59,7 @@ public class ActiveManager {
         data.getOtherBlocks().forEach(b -> b.setType(data.getBlock()));
 
         data.setSpeed(speed);
-        if (speed) player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10000, 2), true);
+        if (speed) player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1), true);
 
         pd.setData(data);
         current.add(player.getUniqueId());

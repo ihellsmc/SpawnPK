@@ -22,7 +22,7 @@ public class JumpManager {
 
     private List<List<ParkourBlock>> jumps = new ArrayList<>();
 
-    public HashMap<Material, Integer> blockTypes = new HashMap<>();
+    public LinkedHashMap<Material, Integer> blockTypes = new LinkedHashMap<>();
 
     public Location plateLocation;
 
@@ -63,8 +63,9 @@ public class JumpManager {
             pk.setType(ParkourBlockType.valueOf(data[0].toUpperCase()));
 
             int[] relative = new int[3];
-            for (int i = 0; i < data[1].split(",").length; i++) {
-                relative[i] = Integer.parseInt(data[1].split(",")[i]);
+            String[] s = data[1].split(",");
+            for (int i = 0; i < s.length; i++) {
+                relative[i] = Integer.parseInt(s[i]);
             }
 
             pk.setRelative(relative);

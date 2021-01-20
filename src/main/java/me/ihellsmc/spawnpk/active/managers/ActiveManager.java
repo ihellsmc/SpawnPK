@@ -82,14 +82,11 @@ public class ActiveManager {
                 Block blk = data.getBlockFrom().getRelative(pk.getRelative()[0], pk.getRelative()[1], pk.getRelative()[2]);
                 otherBlocks.add(blk);
                 set(data, blk, pk);
-
-                pk.clear();
             }
 
             data.setOtherBlocks(otherBlocks);
 
         }
-        block.clear();
 
     }
 
@@ -120,14 +117,11 @@ public class ActiveManager {
                 Block blk = player.getLocation().getBlock().getRelative(pk.getRelative()[0], pk.getRelative()[1], pk.getRelative()[2]);
                 otherBlocks.add(blk);
                 set(data, blk, pk);
-
-                pk.clear();
             }
 
             data.setOtherBlocks(otherBlocks);
 
         }
-        block.clear();
     }
 
     private void set(ActiveData data, Block block, ParkourBlock pkBlock) {

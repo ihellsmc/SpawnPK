@@ -25,6 +25,8 @@ public class JumpListener implements Listener {
             PlayerData pd = core.getPlayerManager().get(e.getPlayer().getUniqueId());
             ActiveData data = pd.getData();
 
+            if (data == null) return;
+
             if (e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).getLocation().equals(data.getBlockTo().getLocation())) {
 
                 core.getActiveManager().selectNewJump(data);

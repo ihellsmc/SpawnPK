@@ -8,6 +8,7 @@ import me.ihellsmc.spawnpk.framework.command.QuarkFramework;
 import me.ihellsmc.spawnpk.playerdata.PlayerData;
 import me.ihellsmc.spawnpk.utils.CC;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -52,6 +53,23 @@ public class TestCommand {
 
         for (Material material : core.getJumpManager().getBlockTypes().keySet()) {
             if (data.getHighscore() >= core.getJumpManager().getBlockTypes().get(material)) player.sendMessage(CC.trns(material.toString()));
+        }
+
+    }
+
+    @Command(name = "data")
+    public void onDataCommand(CommandArgs cmd) {
+        Player player = cmd.getPlayer();
+        PlayerData data = core.getPlayerManager().get(player.getUniqueId());
+        ActiveData ad = data.getData();
+
+        if (ad == null) {
+            player.sendMessage("null");
+        } else {
+            Location from = ad.getBlockFrom().getLocation();
+            Location to = ad.getBlockTo().getLocation();
+            player.sendMessage(CC.trns("&c&lFROM: &7" + from.getBlockX() + " " + from.getBlockY() + " " + from.getBlockZ()));
+            player.sendMessage(CC.trns("&6&lTO: &7" + to.getBlockX() + " " + to.getBlockY() + " " + to.getBlockZ()));
         }
 
     }

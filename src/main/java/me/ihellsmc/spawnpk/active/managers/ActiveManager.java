@@ -40,6 +40,7 @@ public class ActiveManager {
         pd.setData(data);
 
         data.setBlock(material);
+        data.setBlockFrom(player.getLocation().getBlock().getRelative(0, -1, 0));
 
         setRandomJump(player, data);
 
@@ -53,8 +54,9 @@ public class ActiveManager {
     public void selectNewJump(ActiveData data) {
         List<ParkourBlock> blocks = core.getJumpManager().getRandom();
         data.getBlockFrom().setType(Material.AIR);
-        data.setBlockFrom(data.getBlockTo());
         data.getOtherBlocks().forEach(b -> b.setType(Material.AIR));
+
+        data.setBlockFrom(data.getBlockTo());
 
         ParkourBlock block;
         if (blocks.size() == 1) {

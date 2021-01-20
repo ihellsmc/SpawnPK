@@ -25,13 +25,21 @@ public class ActiveManager {
     public List<UUID> current = new ArrayList<>();
 
     public void selectInitialJump(Player player, boolean speed) {
+
+        current.add(player.getUniqueId());
+
         PlayerData pd = core.getPlayerManager().get(player.getUniqueId());
         if (pd.getData() != null) selectNewJump(pd.getData());
         Material material = core.getJumpManager().getMaterial(pd);
 
+        player.teleport(player.getLocation().add(distanced(15), 30, distanced(15)));
+
         player.getLocation().getBlock().getRelative(0, -1, 0).setType(material);
 
         ActiveData data = new ActiveData();
+        pd.setData(data);
+
+        data.setBlock(material);
 
         setRandomJump(player, data);
 

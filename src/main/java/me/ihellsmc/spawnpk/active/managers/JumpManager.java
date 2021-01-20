@@ -55,33 +55,27 @@ public class JumpManager {
 
     private List<ParkourBlock> genRelative(String jump) {
         List<ParkourBlock> toReturn = new ArrayList<>();
-
         for (String j : jump.split("/")) {
+            // BLOCK:0,0,0
+            String[] data = j.split(":");
 
-            ParkourBlockType type = ParkourBlockType.valueOf(j.split(":")[0].toUpperCase());
+            ParkourBlock pk = new ParkourBlock();
+            pk.setType(ParkourBlockType.valueOf(data[0].toUpperCase()));
 
-            int[] jumpArray = new int[3];
-            String[] relative = j.split(":")[1].split(",");
-
-            for (int i = 0; i < relative.length; i++) {
-                try {
-                    jumpArray[i] = Integer.parseInt(relative[i]);
-                } catch (NumberFormatException e) {
-                    jumpArray[i] = 1;
-                    core.getLogger().severe(e.getMessage());
-                }
+            int[] relative = new int[3];
+            for (int i = 0; i < data[1].split(",").length; i++) {
+                relative[i] = Integer.parseInt(data[1].split(",")[i]);
             }
 
-            ParkourBlock block = new ParkourBlock();
-            block.setRelative(jumpArray); block.setType(type);
-
-            toReturn.add(block);
+            pk.setRelative(relative);
+            toReturn.add(pk);
         }
-
         return toReturn;
     }
 
-    public List<ParkourBlock> getRandom() { return jumps.get(new Random().nextInt(jumps.size())); }
+    public List<ParkourBlock> getRandom() {
+        return jumps.get(new Random().nextInt(jumps.size()));
+    }
 
     public Material getMaterial(PlayerData pd) {
         Material toReturn = (Material) blockTypes.keySet().toArray()[0];

@@ -28,13 +28,13 @@ public class EffectGUI {
         ItemStack yes = new ItemStack(Material.INK_SACK, 1, (byte) 10);
         ItemMeta yesMeta = yes.getItemMeta();
         yesMeta.setDisplayName(CC.trns("&aClick to enable speed effect!"));
-        yesMeta.setLore(Collections.singletonList(CC.trns("&7This will enable longer jumps!")));
+        yesMeta.setLore(Collections.singletonList(CC.trns("&cYou will only get half points!")));
         yes.setItemMeta(yesMeta);
 
         ItemStack no = new ItemStack(Material.INK_SACK, 1, (byte) 1);
         ItemMeta noMeta = no.getItemMeta();
         noMeta.setDisplayName(CC.trns("&cClick to disable speed effect!"));
-        noMeta.setLore(Collections.singletonList(CC.trns("&7This will keep default jumps!")));
+        noMeta.setLore(Collections.singletonList(CC.trns("&7You will get the full amount of points!")));
         no.setItemMeta(noMeta);
 
         gui.setItem(12, yes);

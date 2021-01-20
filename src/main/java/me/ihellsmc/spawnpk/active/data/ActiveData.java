@@ -12,7 +12,7 @@ public class ActiveData {
     private Block blockFrom;
     private Block blockTo;
     private List<Block> otherBlocks;
-    private int points = 0;
+    private double points = 0;
     private Material block;
     private boolean speed = false;
 

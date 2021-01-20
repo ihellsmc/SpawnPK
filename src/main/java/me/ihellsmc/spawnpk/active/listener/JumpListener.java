@@ -28,11 +28,20 @@ public class JumpListener implements Listener {
             if (e.getPlayer().getLocation().getBlock().getRelative(0, -1, 0).getLocation().equals(data.getBlockTo().getLocation())) {
 
                 core.getActiveManager().selectNewJump(data);
+
+                data.setPoints(data.isSpeed() ? data.getPoints() + 0.5 : data.getPoints() + 1);
+
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ITEM_PICKUP, 1, 2);
                 e.getPlayer().playEffect(data.getBlockTo().getLocation(), Effect.MOBSPAWNER_FLAMES, Integer.MAX_VALUE);
 
             } else if (e.getPlayer().getLocation().getBlockY() + 2 < data.getBlockTo().getY()) {
-                e.getPlayer().sendMessage(CC.trns("&c&lYOU DIED! &7You scored a total of &e" + data.getPoints() + "&7 jumps!"));
+
+                e.getPlayer().sendMessage(CC.trns("&c&lYOU DIED! &7You scored a total of &e" + (int) Math.floor(data.getPoints()) + "&7 jumps!"));
+
+                if (Math.floor(data.getPoints()) > pd.getHighscore()) {
+                    e.getPlayer().sendMessage(CC.trns("&6You beat your highscore of " + pd.getHighscore() + " jumps!"));
+                    pd.setHighscore((int) Math.floor(data.getPoints()));
+                }
 
                 data.getBlockFrom().setType(Material.AIR);
                 data.getBlockTo().setType(Material.AIR);

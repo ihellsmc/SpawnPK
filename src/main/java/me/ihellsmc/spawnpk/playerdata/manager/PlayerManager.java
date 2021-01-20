@@ -33,7 +33,14 @@ public class PlayerManager {
     }
 
     public void remove(UUID uuid) {
-        PlayerData pd = get(uuid); pd.clear();
+        PlayerData pd = get(uuid);
+
+        if (pd.getHighscore() > 0) {
+            data.set(uuid.toString(), (int) Math.floor(pd.getHighscore()));
+            core.getConfigManager().getFile("player-data").saveConfig();
+        }
+
+        pd.clear();
         registered.remove(pd);
     }
 

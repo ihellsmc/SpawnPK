@@ -5,6 +5,7 @@ import me.ihellsmc.spawnpk.active.data.ActiveData;
 import me.ihellsmc.spawnpk.framework.command.Command;
 import me.ihellsmc.spawnpk.framework.command.CommandArgs;
 import me.ihellsmc.spawnpk.framework.command.QuarkFramework;
+import me.ihellsmc.spawnpk.playerdata.PlayerData;
 import me.ihellsmc.spawnpk.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -41,6 +42,17 @@ public class TestCommand {
         }
 
         core.getConfigManager().getFile("config").saveConfig();
+
+    }
+
+    @Command(name = "mat")
+    public void onMat(CommandArgs cmd) {
+        Player player = cmd.getPlayer();
+        PlayerData data = core.getPlayerManager().get(player.getUniqueId());
+
+        for (Material material : core.getJumpManager().getBlockTypes().keySet()) {
+            if (data.getHighscore() >= core.getJumpManager().getBlockTypes().get(material)) player.sendMessage(CC.trns(material.toString()));
+        }
 
     }
 
